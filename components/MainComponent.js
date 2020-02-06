@@ -3,7 +3,7 @@ import Home from '../HomeComponent';
 import Directory from './DirectoryComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
 import { View, Platform } from 'react-native';
-import { createStackNavigator, createrDrawerNavigator } from 'react-navigation';
+import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
 
 
 const DirectoryNavigator = createStackNavigator(
