@@ -22,7 +22,7 @@ class Directory extends Component {
                 <ListItem
                     title={item.name}
                     subtitle={item.description}
-                    onPrsess={() => props.onPress(item.id)}
+                    onPress={() => props.onPress(item.id)}
                     leftAvatar={{ source: require('./images/react-lake.jpg')}}
                 />
             );
@@ -30,7 +30,7 @@ class Directory extends Component {
     
         return (
             <FlatList 
-                data={props.campsites}
+                data={this.state.campsites}
                 renderItem={renderDirectoryItem}
                 keyExtractor={item => item.id.toString()}
             />
