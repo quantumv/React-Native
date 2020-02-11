@@ -22,7 +22,7 @@ class Directory extends Component {
                 <ListItem
                     title={item.name}
                     subtitle={item.description}
-                    onPress={() => props.onPress(item.id)}
+                    onPress={() => navigate('CampsiteInfo', {campsiteId: item.id})}
                     leftAvatar={{ source: require('./images/react-lake.jpg')}}
                 />
             );
