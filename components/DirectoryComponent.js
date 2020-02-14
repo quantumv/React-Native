@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Text } from 'react-native';
 import { Tile } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -34,6 +34,7 @@ class Directory extends Component {
         if (this.props.campsites.isLoading) {
             return <Loading />;
         }
+        
         if (this.props.campsites.errMess) {
             return (
                 <View>
@@ -42,13 +43,14 @@ class Directory extends Component {
             );
         }
 
-        return (
-            <FlatList 
+	return (
+            <FlatList
                 data={this.props.campsites.campsites}
                 renderItem={renderDirectoryItem}
                 keyExtractor={item => item.id.toString()}
             />
         );
-    };
+    }
 }
+
 export default connect(mapStateToProps)(Directory);
