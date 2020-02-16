@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal, TouchableWithoutFeedbackBase } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 
 class Reservation extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             campers: 1,
             hikeIn: false,
