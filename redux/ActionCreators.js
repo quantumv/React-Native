@@ -1,5 +1,6 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
+// import ReduxThunk from 'redux-thunk';
 
 export const fetchComments = () => dispatch => {
     return fetch(baseUrl + 'comments')
@@ -152,3 +153,23 @@ export const addFavorite = campsiteId => ({
     type: ActionTypes.ADD_FAVORITE,
     payload: campsiteId
 });
+
+export const postComment = (campsiteId, rating, author, text) => dispatch => {
+    let date = new Date().toISOString()
+    const newComment = {
+        campsiteId,
+        rating,
+        author,
+        text,
+        date
+    };
+
+    setTimeout(() => {
+        dispatch(addComment(newComment));
+    }, 2000);
+};
+export const addComment = comment => ({
+    type: ActionTypes.ADD_COMMENT,
+    payload: comment
+});
+
