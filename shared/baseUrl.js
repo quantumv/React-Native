@@ -4,4 +4,4 @@ export const baseUrl = 'http://192.168.1.4:3001/';
 // export const baseUrl = 'http://192.168.1.55:3001/';
 
 // Whole Foods
-// export const baseUrl = 'http://192.168.15.115:3001/';
+// export const baseUrl = 'http://192.168.10.74:3001/';
