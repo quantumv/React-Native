@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Picker, Switch, Button, Alert } from 'react-nat
 import DatePicker from 'react-native-datepicker';
 import * as Animatable from 'react-native-animatable';
 
-// Exercise:Local Notifications  Week3- step:1 added imports
+// Exercise:Local Notifications  Week4- step:1 added imports
 import * as Permissions from 'expo-permissions';
 import { Notifications } from 'expo';
 
@@ -59,7 +59,7 @@ class Reservation extends Component {
                     text: 'Ok',
                     onPress: () => {
                         
-                    //Exercise:Local Notifications  Week3- step:3 This calls presentLocalNotification
+                    //Exercise:Local Notifications  Week4- step:3 This calls presentLocalNotification
                     this.presentLocalNotification(this.state.date);
                     
                     this.resetForm();
@@ -70,7 +70,7 @@ class Reservation extends Component {
         );
     }
 
-    // Exercise:Local Notifications  Week3- step:2 added two method that obtains permission to enable notification reception
+    // Exercise:Local Notifications  Week4- step:2 added two method that obtains permission to enable notification reception
     async obtainNotificationPermission() {
         const permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
         if (permission.status !== 'granted') {

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList, StyleSheet, Button, Modal, Alert, PanResponder } from 'react-native';
+import { Text, View, ScrollView, FlatList, StyleSheet, Button, Modal, Alert, PanResponder, Share } from 'react-native';
 import { Card, Icon, Input, Rating } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { postFavorite, postComment } from '../redux/ActionCreators';
 import * as Animatable from 'react-native-animatable';
-
+//Exercise: Social Sharing Week:4- step:1 add Share to react-native
 
 const mapStateToProps = state => {
     return {
@@ -73,6 +73,18 @@ function RenderCampsite(props) {
     }
 });
 
+//Exercise: Social Sharing Week:4- step:2  implemented inner function 
+//NOTE: the share method takes up to two arguments first object required is for the content being shared, second method optional.
+const shareCampsite = (title, message, url) => {
+    Share.share({
+        title: title,
+        message: `${title}: ${message} ${url}`,
+        url: url
+    },{
+        dialogTitle: 'Share ' + title
+    });
+};
+
 // Exercise: Gestures Part 1: Week 3 step:4 added {...panHandlers...} prop, us the spreads sytacxs to spread out the panHandlers panResponders. This is wrapped around the <Card>.
     if (campsite) {
         return (
@@ -89,6 +101,8 @@ function RenderCampsite(props) {
                         {campsite.description}
                     </Text>
                     <View style={styles.cardRow}>
+                    
+                    {/* This is the Heart */}
                         <Icon
                             name={props.favorite ? 'heart' : 'heart-o'}
                             type='font-awesome'
@@ -98,6 +112,8 @@ function RenderCampsite(props) {
                             onPress={() => props.favorite ?
                                 console.log('Already set as a favorite') : props.markFavorite()}
                         />
+                    
+                    {/* This is the pencil */}
                         <Icon style={styles.cardItem}
                             name='pencil'
                             type='font-awesome'
@@ -105,6 +121,17 @@ function RenderCampsite(props) {
                             raised
                             reverse
                             onPress={() => props.onShowModal()}
+                        />
+                {/*Exercise: Social Sharing Week:4- step:3 add share Icon */}
+                    {/* This is the share */}
+                         <Icon
+                            name={'share'}
+                            type='font-awesome'
+                            color='#5637DD'
+                            style={styles.cardItem}
+                            raised
+                            reversed
+                            onPress={() => shareCampsite(campsite.name, campsite.description, baseUrl + campsite.image)} 
                         />
                     </View>
                 </Card>
