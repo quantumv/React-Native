@@ -20,28 +20,36 @@ const mapDispatchToProps = {
     postComment: (campsiteId, rating, author, text) => postComment(campsiteId, rating, author, text)
 };
 
+// Exercise: Gestures Part 1: Week 3: first import PanResponder into React-Native 
 function RenderCampsite(props) {
     
     const { campsite } = props;
 
     const view = React.createRef();
 
-// Week 4 Update //
     const recognizeComment = ({dx}) => (dx < -200) ? true : false;
 
+    // Exercise: Gestures Part 1: Week 3 step:1 setup function recognizeDrag as arrow function
     const recognizeDrag = ({dx}) => (dx < -200) ? true : false;
 
-    const panResponder = PanResponder.create({onStartShouldSetPanResponder: () => true,
-    onPanResponderGrant: () => {
+    // Exercise: Gestures Part 1: Week 3 step:2 setup PanResponders API
+    const panResponder = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        //added in Week 3 Workshop
+        onPanResponderGrant: () => {
         view.current.rubberBand(1000)
         .then(endState => console.log(endState.finished ? 'finished' : 'canceled'));
     },
-    onPanResponderEnd: (e, gestureState) => {
+        onPanResponderEnd: (e, gestureState) => {
         console.log('pan responder end', gestureState);
+
+        // Exercise: Gestures Part 1: Week 3 step:3 setup an alert
         if (recognizeDrag(gestureState)) {
             Alert.alert(
                 'Add Favorite',
                 'Are you sure you wish to add ' + campsite.name + 'to favorites?',
+                
+                //these are the buttons
                 [
                     {
                         text: 'Cancel',
@@ -56,6 +64,8 @@ function RenderCampsite(props) {
                 ],
                 { cancelable: false }
             );
+            
+            //added in Week 3 Workshop
         } else if(recognizeComment(gestureState)) {
             props.onShowModal()
         }
@@ -63,6 +73,7 @@ function RenderCampsite(props) {
     }
 });
 
+// Exercise: Gestures Part 1: Week 3 step:4 added {...panHandlers...} prop, us the spreads sytacxs to spread out the panHandlers panResponders. This is wrapped around the <Card>.
     if (campsite) {
         return (
             <Animatable.View 

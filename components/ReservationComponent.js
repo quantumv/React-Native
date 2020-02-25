@@ -3,6 +3,10 @@ import { Text, View, StyleSheet, Picker, Switch, Button, Alert } from 'react-nat
 import DatePicker from 'react-native-datepicker';
 import * as Animatable from 'react-native-animatable';
 
+// Exercise:Local Notifications  Week3- step:1 added imports
+import * as Permissions from 'expo-permissions';
+import { Notifications } from 'expo';
+
 class Reservation extends Component {
 
     constructor(props) {
@@ -31,30 +35,64 @@ class Reservation extends Component {
     handleReservation() {
         console.log(JSON.stringify(this.state));
 
-// Temperate Literal ES6 Strings 'Study' //
+// Workshop-Week:3 Temperate Literal ES6 Strings 'Study' //
         const message =`
         Campers: ${this.state.campers} \n
         Hike-In: ${this.state.hikeIn} \n
         Date: ${this.state.date}`
 
-// Alert Form
+// Workshop-Week:3 created Alert Form
         Alert.alert(
             'Begin Search ?',
             message,
             [
                 {
                     text: 'Cancel',
-                    styles: 'cancel',
-                    onPress: () => console.log('Cancel Pressed')
+                    onPress: () => { 
+                        console.log('Cancel Pressed');
+                        this.resetForm();
+                    
+                },
+                    style: 'cancel',
                 },
                 {
                     text: 'Ok',
-                    styles: 'ok'
-                },
-            ]
-        )
+                    onPress: () => {
+                        
+                    //Exercise:Local Notifications  Week3- step:3 This calls presentLocalNotification
+                    this.presentLocalNotification(this.state.date);
+                    
+                    this.resetForm();
+                    }
+                }
+            ],
+            { cancelable: false }
+        );
     }
 
+    // Exercise:Local Notifications  Week3- step:2 added two method that obtains permission to enable notification reception
+    async obtainNotificationPermission() {
+        const permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+        if (permission.status !== 'granted') {
+            const permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+            if (permission.status !== 'granted') {
+                Alert.alert('Permission not granted to show notifications');
+            }
+            return permission;
+        }
+        return permission;
+    }
+
+    async presentLocalNotification(date) {
+        const permission = await this.obtainNotificationPermission();
+        if (permission.status === 'granted') {
+            Notifications.presentLocalNotificationAsync({
+                title: 'Your Campsite Reservation Search',
+                body: 'Search for ' + date + ' requested'
+            });
+        }
+    }
+    
     // this is the Picker component 
     render() {
         return (
@@ -127,6 +165,7 @@ class Reservation extends Component {
     }
 }
 
+// StyleSheet
 const styles = StyleSheet.create({
     formRow: {
         alignItems: 'center',

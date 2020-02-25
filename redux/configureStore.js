@@ -11,8 +11,7 @@ import { persistStore, persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/es/storage';
 
 //Exercise:Persist Redux Store step 1: set-up an object tha contains some configuration values. NOTE: Two properties that are required are key, and storage.
-//Exercise:Persist Redux Store 
-//step:1 set-up an object tha contains some configuration values. NOTE: Two properties that are required are key, and storage.
+// NOTE: Two properties that are required are key, and storage. Persist allows data to be recorded and reviewed again
 const config = {
     key: 'root',
     storage,

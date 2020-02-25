@@ -10,7 +10,7 @@ import Loading from './components/LoadingComponent';
 // Exercise: Persist Redux Store-Week 3 added persistor
 const { persistor, store } = ConfigureStore();
 
-// Exercise: Persist Redux Store-Week 3 Wrapped Main Component in the Persist Gate Component 
+// Exercise: Persist Redux Store-Week 3 Wrapped Main Component in the Persist Gate Component, also added loading. 
 export default function App() {
   return (
       <Provider store={store}>
