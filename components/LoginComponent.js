@@ -111,3 +111,5 @@ const styles = StyleSheet.create({
 });
 
 export default Login;
+
+// Know, intergrate you form into the navigation "MainComponent".
