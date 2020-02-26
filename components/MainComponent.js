@@ -7,13 +7,15 @@ import Contact from './ContactComponent';
 import Reservation from './ReservationComponent';
 import Favorites from './FavoritesComponent';
 import Login from './LoginComponent';
-import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
+import { View, Platform, StyleSheet, Text, ScrollView, Image, Alert, ToastAndroid } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, DrawerItems } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import SafeAreaView from 'react-native-safe-area-view';
 import { connect } from 'react-redux';
-import { fetchCampsites, fetchComments, fetchPromotions,
-    fetchPartners } from '../redux/ActionCreators';
+import { fetchCampsites, fetchComments, fetchPromotions, fetchPartners } from '../redux/ActionCreators';
+import NetInfo from '@react-native-community/netinfo';
+// Exercise: Network Info Week:4 step:1 added Alert, ToastAndroid imports, installed yarn add @react-native-community/netinfo@3.2.1 //
+// Exercise: Network Info Week:4 step:2 added NetInfo import
 
 const mapDispatchToProps = {
     fetchCampsites,
@@ -328,7 +330,53 @@ class Main extends Component {
     this.props.fetchComments();
     this.props.fetchPromotions();
     this.props.fetchPartners();
+
+    //Exercise: Network Info Week:4 step:3 Use NetOnfo.fetch() method to obtain network state once//
+    // calling the method
+    NetInfo.fetch().then(connectionInfo => {
+
+      //Exercise: Network iOS specific //
+      (Platform.OS === 'ios') ? 
+
+      //Exercise: Network Android specific //
+          Alert.alert('Initial Network Connectivity Type:', 
+          connectionInfo.type)
+          : ToastAndroid.show('Initial Network Connectivity Type: ' +
+              connectionInfo.type, ToastAndroid.LONG);
+              //Exercise: Network connection duration //
+  });
+
+  //Exercise: Network this subscribes to changes in the network //
+  this.unsubscribeNetInfo = NetInfo.addEventListener(connectionInfo => {
+      this.handleConnectivityChange(connectionInfo);
+  });
+}
+
+//Exercise: Network this is called a lifecycle method //
+componentWillUnmount() {
+  this.unsubscribeNetInfo();
+}
+
+//Exercise: Network this handles changes in the connectivity state //
+handleConnectivityChange = connectionInfo => {
+  let connectionMsg = 'You are now connected to an active network.';
+  switch (connectionInfo.type) {
+      case 'none':
+          connectionMsg = 'No network connection is active.';
+          break;
+      case 'unknown':
+          connectionMsg = 'The network connection state is now unknown.';
+          break;
+      case 'cellular':
+          connectionMsg = 'You are now connected to a cellular network.';
+          break;
+      case 'wifi':
+          connectionMsg = 'You are now connected to a WiFi network.';
+          break;
   }
+  (Platform.OS === 'ios') ? Alert.alert('Connection change:', connectionMsg)
+      : ToastAndroid.show(connectionMsg, ToastAndroid.LONG);
+}
 
   render() {
     return (
