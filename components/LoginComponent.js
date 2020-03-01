@@ -1,11 +1,12 @@
 //  Exercise: Secure Store ReactNative Week 4 //
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, Image } from 'react-native';
-import { Input, CheckBox, Button, Icon } from 'react-native-elements';
+import { Input, CheckBox, Button, Icon, Gallery } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
 //Exercise: Picking an Image Week 4 //
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { createBottomTabNavigator } from 'react-navigation';
 import { baseUrl } from '../shared/baseUrl';
 
@@ -176,10 +177,33 @@ class RegisterTab extends Component {
             });
             if (!capturedImage.cancelled) {
                 console.log(capturedImage);
-                this.setState({imageUrl: capturedImage.uri});
+               processImage(capturedImage.uri);
             }
         }
     }
+    // Week 4 Workshop Task 1: Resize a photo and convert it to JPEG
+    processImage = async imgUri => {
+    const processedImage = await ImageManipulator.manipulateAsync(imgUri, [{resize: { width: 400}}], {format:'PNG'});
+    console.log(processedImage);
+    this.setState({imageUrl: this.processedImage.uri});
+    }
+
+    getImageFromGallery = async () => {
+        const cameraRollPermission = await Permission.askAsync(Permission.CAMERA_ROLL);
+        
+        if (cameraPermission.status === 'granted' && cameraRollPermission.status === 'granted')
+        {
+            const capturedImage = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                aspect: [1, 1]
+            });
+            if (!capturedImage.cancelled) {
+                console.log(capturedImage);
+               processImage(capturedImage.uri);
+            }
+        }
+    }
+
 
     // Exercise: Picking an Image Week 4- step:6 duplicated handle method from login //
     handleRegister() {
