@@ -325,26 +325,29 @@ const MainNavigator = createDrawerNavigator(
 
 class Main extends Component {
 
-  componentDidMount() {
-    this.props.fetchCampsites();
-    this.props.fetchComments();
-    this.props.fetchPromotions();
-    this.props.fetchPartners();
-
-    //Exercise: Network Info Week:4 step:3 Use NetOnfo.fetch() method to obtain network state once//
+        //Week 4 Workshop Task 3: Moved NetInfo here
+      //Exercise: Network Info Week:4 step:3 Use NetOnfo.fetch() method to obtain network state once//
     // calling the method
-    NetInfo.fetch().then(connectionInfo => {
-
+    async showNetInfo(){
+      const connectionInfo = await NetInfo.fetch();  
       //Exercise: Network iOS specific //
       (Platform.OS === 'ios') ? 
-
+    
       //Exercise: Network Android specific //
           Alert.alert('Initial Network Connectivity Type:', 
           connectionInfo.type)
           : ToastAndroid.show('Initial Network Connectivity Type: ' +
               connectionInfo.type, ToastAndroid.LONG);
               //Exercise: Network connection duration //
-  });
+  }
+
+  componentDidMount() {
+    this.props.fetchCampsites();
+    this.props.fetchComments();
+    this.props.fetchPromotions();
+    this.props.fetchPartners();
+
+  <showNetInfo />
 
   //Exercise: Network this subscribes to changes in the network //
   this.unsubscribeNetInfo = NetInfo.addEventListener(connectionInfo => {

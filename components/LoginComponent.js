@@ -237,6 +237,10 @@ class RegisterTab extends Component {
                             title='Camera'
                             onPress={this.getImageFromCamera}
                         />
+                        <Button
+                            title='Gallery'
+                            onPress={this.getImageFromCamera}
+                        />
                     </View>
                 
                 {/* This is the form structure */}
